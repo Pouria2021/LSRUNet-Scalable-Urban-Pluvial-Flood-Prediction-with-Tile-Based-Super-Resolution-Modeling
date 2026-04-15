@@ -123,14 +123,7 @@ Evaluated at configurable flood depth thresholds (e.g., 0.15m, 0.27m, 0.4m, 0.6m
 
 ## Citation
 
-```bibtex
-@article{nakhaei2026lsrunet,
-  title={Scalable Urban Pluvial Flood Prediction with Tile-Based Super-Resolution Modeling},
-  author={Nakhaei, Pouria},
-  journal={},
-  year={2026}
-}
-```
+
 
 *DOI will be added upon publication.*
 
