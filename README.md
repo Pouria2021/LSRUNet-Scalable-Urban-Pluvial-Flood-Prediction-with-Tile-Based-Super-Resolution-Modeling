@@ -76,17 +76,12 @@ The core model (**ResUNet_aux**) is an encoder-decoder network with skip connect
 - **Multi-task variant** (**ResUNet_aux_MTL**): Additional binary flood mask head for simultaneous depth + inundation prediction.
 
 Alternative encoder backends:
-- **MaxViT** (`model_vit.py`): Multi-axis ViT with block and grid attention.
-- **SwinV2** (`model_swinT.py`): Swin Transformer V2 with scaled cosine attention and log-spaced CPB.
-
 ## Project Structure
 
 ```
 .
 ├── main.py                          # Distributed training script (DDP via torchrun)
 ├── model_unet.py                    # ResUNet with SE blocks (ResUNet_aux, ResUNet_aux_MTL)
-├── model_vit.py                     # MaxViT U-Net encoder-decoder
-├── model_swinT.py                   # Swin Transformer V2 U-Net
 ├── dataset.py                       # Dataset classes and data loading utilities
 ├── metric.py                        # Loss functions and evaluation metrics
 ├── utils.py                         # LR schedule helpers and depth distribution tools
@@ -122,7 +117,7 @@ Edit `train_config.json` to set your paths and hyperparameters. Key fields:
 
 | Section | Field | Description |
 |---------|-------|-------------|
-| `model` | `type` | `"UNet"`, `"MaxVIT"`, or `"SwinT"` |
+| `model` | `type` | `"UNet"` |
 | `model` | `num_target_channels` | Base channel width multiplier |
 | `model` | `num_levels` | Encoder depth (default: 4) |
 | `model` | `mtl_flag` | Enable multi-task (depth + mask) |
