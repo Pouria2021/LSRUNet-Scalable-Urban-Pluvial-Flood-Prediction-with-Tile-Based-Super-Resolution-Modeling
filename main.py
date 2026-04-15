@@ -8,7 +8,6 @@ Usage:
     torchrun --nproc_per_node=4 main.py --case_config_path config.json
 
 The training supports:
-    - Multiple model architectures: ResUNet, Swin Transformer V2, MaxViT
     - Multi-task learning (depth + mask prediction)
     - Autoregressive and non-autoregressive training modes
     - Distributed training with PyTorch DDP
@@ -33,8 +32,6 @@ from torch.nn.parallel import DistributedDataParallel as DDP
 
 from dataset import get_autoregressive_dataloader, preload_dataV2
 from model_unet import ResUNet_aux, ResUNet_aux_MTL
-from model_vit import MaxVIT
-from model_swinT import SwinV2
 from metric import parallel_calculate_metricsV2, FloodPredLoss
 from utils import calculate_cosLR_cycles, get_progress_ratio_of_cycle
 
@@ -267,26 +264,11 @@ def unet_train_mgpu_subproc(case_config_path: str) -> None:
             # params = model_ddp.parameters()   # here we can not use `model_ddp.parameters()` (which returns a generator) when we use two optimizers
             params = list(model_ddp.parameters())
     else:
-        if MODEL_TYPE == "UNet":
-            model = ResUNet_aux(num_input_channels=NUM_PREV_STEP + 1, 
-                                num_target_channels=num_model_target_channels, 
-                                num_levels=num_model_levels, 
-                                num_aux_target_channels=[num_aux_target_channels for i in range(0, NUM_STATIC_CHANNELS)], 
-                                num_aux_levels_list=[num_model_levels for i in range(0, NUM_STATIC_CHANNELS)]).to(device)
-        elif MODEL_TYPE == "MaxVIT":
-            model = MaxVIT(num_input_channels=NUM_PREV_STEP + 1, 
-                            num_target_channels=num_model_target_channels, 
-                            num_levels=num_model_levels, 
-                            num_aux_target_channels=[num_aux_target_channels for i in range(0, NUM_STATIC_CHANNELS)], 
+        model = ResUNet_aux(num_input_channels=NUM_PREV_STEP + 1,
+                            num_target_channels=num_model_target_channels,
+                            num_levels=num_model_levels,
+                            num_aux_target_channels=[num_aux_target_channels for i in range(0, NUM_STATIC_CHANNELS)],
                             num_aux_levels_list=[num_model_levels for i in range(0, NUM_STATIC_CHANNELS)]).to(device)
-        elif MODEL_TYPE == "SwinT":
-            model = SwinV2(num_input_channels=NUM_PREV_STEP + 1, 
-                            num_target_channels=num_model_target_channels, 
-                            num_levels=num_model_levels, 
-                            num_aux_target_channels=[num_aux_target_channels for i in range(0, NUM_STATIC_CHANNELS)], 
-                            num_aux_levels_list=[num_model_levels for i in range(0, NUM_STATIC_CHANNELS)]).to(device)
-        else:
-            raise ValueError(f"Unsupported MODEL_TYPE: {MODEL_TYPE}")
         
         if MODEL_INI_STATE is not None and os.path.exists(MODEL_INI_STATE):
             print(f"Loading model initial state from: {MODEL_INI_STATE}")
