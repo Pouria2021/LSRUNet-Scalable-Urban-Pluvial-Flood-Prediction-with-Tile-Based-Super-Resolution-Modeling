@@ -1,5 +1,7 @@
 # LSRUNet: Tile-Based Super-Resolution for Urban Pluvial Flood Prediction
 
+[![DOI](https://zenodo.org/badge/1211052454.svg)](https://doi.org/10.5281/zenodo.19584563)
+
 **Pouria Nakhaei**, *State Key Laboratory of Hydro-science and Engineering, Department of Hydraulic Engineering, Tsinghua University, Beijing, China
 
 ---
@@ -122,7 +124,6 @@ Evaluated at configurable flood depth thresholds (e.g., 0.15m, 0.27m, 0.4m, 0.6m
 - **Bias**: Mean prediction bias
 
 ## Citation
-
 
 
 *DOI will be added upon publication.*
