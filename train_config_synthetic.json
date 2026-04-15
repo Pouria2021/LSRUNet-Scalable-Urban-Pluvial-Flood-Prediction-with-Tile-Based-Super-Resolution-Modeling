@@ -1,0 +1,59 @@
+{
+    "case_identifier": "synthetic_demo",
+    "model": {
+        "num_target_channels": 512,
+        "num_aux_target_channels": 512,
+        "num_levels": 4,
+        "mtl_flag": false,
+        "use_flood_LR": true,
+        "save_root_dir": "./synthetic_results",
+        "initial_state": "",
+        "type": "UNet"
+    },
+    "dataset": {
+        "tile_keywords": "Tile",
+        "num_tile": 3,
+        "tile_polygon_path": "./synthetic_dataset/tile_polygons.geojson",
+        "train_root_dir": "./synthetic_dataset/train",
+        "train_case_list": "./synthetic_dataset/train_cases.csv",
+        "valid_root_dir": "./synthetic_dataset/val",
+        "valid_case_list": "./synthetic_dataset/val_cases.csv",
+        "aux_file_info": {
+            "DEM": "./synthetic_dataset/static/DEM",
+            "runoffCoef": "./synthetic_dataset/static/landuseRC",
+            "roughness": "./synthetic_dataset/static/landuseRoughness"
+        },
+        "mask_file_prefix": "./synthetic_dataset/mask/boundaryMask",
+        "flood_LR_train_root_dir": "./synthetic_dataset/train/flood_LR",
+        "flood_LR_valid_root_dir": "./synthetic_dataset/val/flood_LR"
+    },
+    "learning_settings": {
+        "batch_size": 2,
+        "num_workers": 2,
+        "sample_weight_path": "./synthetic_dataset/depth_distribution_D10.csv",
+        "learning_rates": {
+            "nar_base": 0.0001,
+            "ar_base": 1e-05,
+            "scaling_factor_nar": 0.01,
+            "scaling_factor_ar": 0.1
+        },
+        "loss": {
+            "delta": 1.0,
+            "thresholds": [
+                0.15,
+                0.27,
+                0.4,
+                0.6
+            ]
+        },
+        "mtl_dynamic_weight": false,
+        "autoregressive": {
+            "num_prev_step": 0,
+            "max_forward_step": 0
+        },
+        "epochs": {
+            "num_non_autoregressive": 2,
+            "num_autoregressive": 0
+        }
+    }
+}
