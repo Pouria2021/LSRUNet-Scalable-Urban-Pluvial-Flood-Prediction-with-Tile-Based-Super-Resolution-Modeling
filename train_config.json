@@ -1,0 +1,54 @@
+{
+    "case_identifier": "tile512SR_i0o1",
+    "model": {
+        "num_target_channels": 1024,
+        "num_aux_target_channels": 1024,
+        "num_levels": 4,
+        "mtl_flag": false,
+        "use_flood_LR": false,
+        "save_root_dir": "/path/to/results",
+        "initial_state": "",
+        "type": "UNet"
+    },
+    "dataset": {
+        "tile_keywords": "Tile",
+        "num_tile": 20,
+        "tile_polygon_path": "/path/to/tile_polygons.geojson",
+        "train_root_dir": "/path/to/train_data",
+        "train_case_list": "/path/to/train_cases.txt",
+        "valid_root_dir": "/path/to/val_data",
+        "valid_case_list": "/path/to/val_cases.txt",
+        "aux_file_info": {
+            "DEM": "/path/to/static/DEM",
+            "runoffCoef": "/path/to/static/landuseRC",
+            "roughness": "/path/to/static/landuseRoughness"
+        },
+        "mask_file_prefix": "/path/to/mask/boundaryMask",
+        "flood_LR_train_root_dir": "/path/to/train_data/flood_LR",
+        "flood_LR_valid_root_dir": "/path/to/val_data/flood_LR"
+    },
+    "learning_settings": {
+        "batch_size": 8,
+        "num_workers": 8,
+        "sample_weight_path": "/path/to/depth_distribution.csv",
+        "learning_rates": {
+            "nar_base": 1e-4,
+            "ar_base": 1e-5,
+            "scaling_factor_nar": 1e-2,
+            "scaling_factor_ar": 1e-1
+        },
+        "loss": {
+            "delta": 1.0,
+            "thresholds": [0.15, 0.27, 0.4, 0.6]
+        },
+        "mtl_dynamic_weight": false,
+        "autoregressive": {
+            "num_prev_step": 0,
+            "max_forward_step": 0
+        },
+        "epochs": {
+            "num_non_autoregressive": 150,
+            "num_autoregressive": 0
+        }
+    }
+}
