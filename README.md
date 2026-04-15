@@ -1,6 +1,6 @@
 # LSRUNet: Scalable Urban Pluvial Flood Prediction with Tile-Based Super-Resolution Modeling
 
-[![DOI](https://zenodo.org/badge/1211052454.svg)](https://doi.org/10.5281/zenodo.19584563)
+https://doi.org/10.5281/zenodo.19584563
 
 **Pouria Nakhaei**, *State Key Laboratory of Hydro-science and Engineering, Department of Hydraulic Engineering, Tsinghua University, Beijing, China*
 
